@@ -18,13 +18,10 @@ fi
 while true
 do
     RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/orgs/$ORG/repos?per_page=$PAGE_SIZE&page=$PAGE_NUMBER")
-
     REPO_NAMES=$(echo "$RESPONSE" | jq -r ".[] | select(.archived==false) | .name")
-
     if [ "$REPO_NAMES" == "" ]; then
         break
     fi
-
     REPO_LIST+=("$REPO_NAMES")
     ((PAGE_NUMBER++))
 done
